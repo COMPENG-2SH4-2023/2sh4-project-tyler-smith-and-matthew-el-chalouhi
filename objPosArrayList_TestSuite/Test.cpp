@@ -5,6 +5,9 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 // WARNING!!  This test suite does not contain any test cases for accessing elements out-of-bound.
 //
@@ -353,6 +356,32 @@ void testRemoveTail_5Element()
 	// The destructor will be called automatically for stack-allocated objects
 }
 
+void testOutOfBounds() {
+	objPos currentPos;
+	objPos bodyPos{2, 5, 'a'};  
+	objPos tailPos{3, 3, 'm'};
+
+	// Insert 4 body elements, then 1 unique head element
+	objPosArrayList thisList;
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(tailPos);
+
+	string actual ="Empty for Now";
+		string expected = "Invalid Index.";
+
+		try{
+			thisList.getElement(currentPos, 200);
+		}
+		catch (std::out_of_range& e){
+
+			actual = e.what();
+		}
+		ASSERT_EQUAL(expected,actual);
+}
+
 
 
 
@@ -368,6 +397,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(testRemoveHead_5Element));
 	s.push_back(CUTE(testRemoveTail_1Element));
 	s.push_back(CUTE(testRemoveTail_5Element));
+	s.push_back(CUTE(testOutOfBounds));
 	
 
 

@@ -9,8 +9,10 @@ class objPosArrayList
 {
     private:
         objPos* aList;
-        int sizeList;
-        int sizeArray;
+        int sizeList; // Number of valid list elements in the list
+        int sizeArray; // Number of heap allocated elements (valid and invalid)
+
+        void increaseHeapSize();
 
     public:
         objPosArrayList();

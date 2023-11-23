@@ -22,8 +22,8 @@ void Food::generateFood(objPosArrayList blockedList)
     int badCoord = 1;
     while(badCoord) {
         badCoord = 0;
-        xCoord = (rand() % mainGameMechsRef->getBoardSizeX()) + 1;
-        yCoord = (rand() % mainGameMechsRef->getBoardSizeY()) + 1;
+        xCoord = (rand() % (mainGameMechsRef->getBoardSizeX() - 2)) + 1;
+        yCoord = (rand() % (mainGameMechsRef->getBoardSizeY() - 2)) + 1;
 
         for(j = 0; j < blockedList.getSize(); j++) {
             blockedList.getElement(current, j);
@@ -33,7 +33,9 @@ void Food::generateFood(objPosArrayList blockedList)
             }
         }
     }
-    foodPos.setObjPos(objPos(xCoord, yCoord, foodPos.getSymbol()));
+    objPos *temp = new objPos(xCoord, yCoord, '0');
+    foodPos.setObjPos(*temp);
+    delete temp;
 }
 
 void Food::getFoodPos(objPos &returnPos)

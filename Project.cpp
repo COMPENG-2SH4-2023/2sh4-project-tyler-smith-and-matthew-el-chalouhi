@@ -3,6 +3,8 @@
 #include "objPos.h"
 #include "Player.h"
 #include "GameMechs.h"
+#include "Food.h"
+#include "objPosArrayList.h"
 
 
 using namespace std;
@@ -21,6 +23,10 @@ void CleanUp(void);
 Player *player;
 GameMechs *gm;
 objPos playerPos;
+Food *food;
+objPos foodPos;
+
+objPosArrayList blockedList; //TEMP I THINK
 
 
 int main(void)
@@ -49,6 +55,12 @@ void Initialize(void)
     // exitFlag = false;
     gm = new GameMechs();
     player = new Player(gm);
+    food = new Food(gm);
+
+    player->getPlayerPos(playerPos);
+    
+    blockedList.insertHead(playerPos); // TEMP
+    food->generateFood(blockedList);
 }
 
 void GetInput(void)
@@ -73,6 +85,7 @@ void DrawScreen(void)
     int sizeX = (*gm).getBoardSizeX();
     int sizeY = (*gm).getBoardSizeY();
     player->getPlayerPos(playerPos);
+    food->getFoodPos(foodPos);
 
     int i, j;
     for(i = 0; i < sizeY; i++) {
@@ -83,11 +96,14 @@ void DrawScreen(void)
                 else MacUILib_printf("%c", stensil->getSymbol());
             }
             else if(playerPos.isPosEqual(curr)) MacUILib_printf("%c", playerPos.getSymbol());
+            else if(foodPos.isPosEqual(curr)) MacUILib_printf("%c", foodPos.getSymbol());
             else if(j == sizeX - 1) MacUILib_printf("%c\n", stensil->getSymbol());
             else MacUILib_printf(" ");
 
             delete curr;
             curr = NULL;
+
+            
         }
     }
     delete stensil;
@@ -105,6 +121,9 @@ void CleanUp(void)
     gm = NULL;
     delete player;
     player = NULL;
+    delete food;
+    food = NULL;
+
     MacUILib_clearScreen();    
   
     MacUILib_uninit();

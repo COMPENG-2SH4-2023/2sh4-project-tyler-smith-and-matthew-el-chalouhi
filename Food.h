@@ -10,7 +10,7 @@ class Food {
 
         Food(GameMechs *gm);
         ~Food();
-        void generateFood(objPosArrayList blockedList);
+        void generateFood(objPosArrayList &blockedList);
         void getFoodPos(objPos &returnPos);
     
 };

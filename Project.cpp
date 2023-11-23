@@ -3,7 +3,6 @@
 #include "objPos.h"
 #include "Player.h"
 #include "GameMechs.h"
-#include "Food.h"
 #include "objPosArrayList.h"
 
 
@@ -22,11 +21,11 @@ void CleanUp(void);
 
 Player *player;
 GameMechs *gm;
-objPos playerPos;
 Food *food;
 objPos foodPos;
 
-objPosArrayList blockedList; //TEMP I THINK
+objPos test;
+
 
 
 int main(void)
@@ -54,13 +53,12 @@ void Initialize(void)
 
     // exitFlag = false;
     gm = new GameMechs();
-    player = new Player(gm);
     food = new Food(gm);
+    player = new Player(gm, food);
+    food->generateFood(*(player->getPlayerPosList()));
+    MacUILib_printf("done init");
 
-    player->getPlayerPos(playerPos);
-    
-    blockedList.insertHead(playerPos); // TEMP
-    food->generateFood(blockedList);
+    (*(player->getPlayerPosList())).getElement(test, 0);
 }
 
 void GetInput(void)
@@ -84,18 +82,34 @@ void DrawScreen(void)
     objPos *stensil = new objPos(0, 0, '#');
     int sizeX = (*gm).getBoardSizeX();
     int sizeY = (*gm).getBoardSizeY();
-    player->getPlayerPos(playerPos);
     food->getFoodPos(foodPos);
+    objPos nextPlayerItem;
 
-    int i, j;
+    int i, j, k;
     for(i = 0; i < sizeY; i++) {
         for(j = 0; j < sizeX; j++) {
             objPos *curr = new objPos(j, i, 0);
+
+            bool contFlag = false;
+
+            for(k = 0; k < (*(player->getPlayerPosList())).getSize(); k++) {
+                (*(player->getPlayerPosList())).getElement(nextPlayerItem, k);
+                if(nextPlayerItem.isPosEqual(curr)) {
+                    MacUILib_printf("%c", nextPlayerItem.getSymbol());
+                    contFlag = true;
+                }
+            }
+
+            if(contFlag) {
+                delete curr;
+                curr = NULL;
+                continue;
+            } 
+
             if(i == 0 || i == sizeY - 1 || j == 0 || j == sizeX - 1) {
                 if(j == sizeX - 1) MacUILib_printf("%c\n", stensil->getSymbol());
                 else MacUILib_printf("%c", stensil->getSymbol());
             }
-            else if(playerPos.isPosEqual(curr)) MacUILib_printf("%c", playerPos.getSymbol());
             else if(foodPos.isPosEqual(curr)) MacUILib_printf("%c", foodPos.getSymbol());
             else if(j == sizeX - 1) MacUILib_printf("%c\n", stensil->getSymbol());
             else MacUILib_printf(" ");
@@ -106,6 +120,7 @@ void DrawScreen(void)
             
         }
     }
+    
     delete stensil;
 }
 

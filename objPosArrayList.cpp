@@ -94,5 +94,6 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
     if(index >= sizeArray) throw std::out_of_range("Invalid Index.");
+    // printf("x and y (real): %d, %d\n", aList[index].x, aList[index].y);
     returnPos.setObjPos(aList[index]);
 }

@@ -12,7 +12,7 @@ Food::Food(GameMechs *mainGameMechs)
 
 Food::~Food() 
 {
-
+    
 }
 
 void Food::generateFood(objPosArrayList &blockedList)
@@ -27,7 +27,7 @@ void Food::generateFood(objPosArrayList &blockedList)
 
         for(j = 0; j < blockedList.getSize(); j++) {
             blockedList.getElement(current, j);
-             printf("Actual values in the arrayList: %d, %d", current.x, current.y);
+            //printf("Actual values in the arrayList: %d, %d", current.x, current.y);
             if(xCoord == current.x && current.y == yCoord) {
                 badCoord = 1;
                 j = 100;
@@ -35,7 +35,7 @@ void Food::generateFood(objPosArrayList &blockedList)
         }
     }
 
-    printf("Actual values in the arrayList: %d, %d", current.x, current.y);
+    //printf("Actual values in the arrayList: %d, %d", current.x, current.y);
 
     objPos *temp = new objPos(xCoord, yCoord, '0');
     foodPos.setObjPos(*temp);

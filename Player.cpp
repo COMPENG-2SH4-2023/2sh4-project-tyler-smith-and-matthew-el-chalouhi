@@ -65,8 +65,33 @@ void Player::updatePlayerDir()
     }
 }
 
+bool Player::checkSelfCollision()
+{
+    objPos bodyPart;
+
+    for(int i=1; i< playerPosList->getSize(); i++)
+    {
+        playerPosList->getElement(bodyPart, i);
+        if (playerPos->isPosEqual(&bodyPart))
+        {
+            return true;
+        }
+    }
+
+
+    return false;
+}
+
 void Player::movePlayer()
 {
+    if (checkSelfCollision())
+    {
+        (*mainGameMechsRef).setExitTrue();
+        (*mainGameMechsRef).setLoseFlag();
+
+        return;
+    }
+
     // PPA3 Finite State Machine logic
     switch(myDir) {
         case UP:

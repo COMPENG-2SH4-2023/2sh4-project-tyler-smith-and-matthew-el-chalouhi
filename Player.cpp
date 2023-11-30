@@ -111,6 +111,7 @@ void Player::movePlayer()
             playerPos->x++;
             playerPos->x %= (*mainGameMechsRef).getBoardSizeX() - 1;
             if(playerPos->x < 1) playerPos->x = 1;
+            break;
     }
 
     objPos foodPos;

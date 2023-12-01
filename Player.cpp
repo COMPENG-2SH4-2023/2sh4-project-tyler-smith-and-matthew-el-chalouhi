@@ -121,6 +121,7 @@ void Player::movePlayer()
         if(playerPos->isPosEqual(&foodPos)) {
             objPos *next = new objPos(playerPos->x, playerPos->y, '*');
             playerPosList->insertHead(*next);
+            updateScore(1); // Updates score by +1
             delete next;
             next = NULL;
 
@@ -136,5 +137,17 @@ void Player::movePlayer()
         }
     }
     
+}
+
+//Additional Methods to get and update the score
+
+int Player::getScore()
+{
+    return score;
+}
+
+void Player::updateScore(int x)
+{
+    score += x;
 }
 

@@ -73,6 +73,7 @@ void RunLogic(void)
 {
     (*player).updatePlayerDir();
     (*player).movePlayer();
+    
 }
 
 void DrawScreen(void)
@@ -120,6 +121,10 @@ void DrawScreen(void)
             
         }
     }
+    
+    int score = player->getScore();
+
+    MacUILib_printf("\nScore: %d", score); //Prints the score.
     
     delete stensil;
 }

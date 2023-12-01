@@ -24,12 +24,14 @@ class Player
         void updatePlayerDir();
         void movePlayer();
         bool checkSelfCollision();
+        int getScore();
+        void updateScore(int x);
 
     private:
         objPosArrayList *playerPosList;   // Upgrade this in iteration 3.       
         enum Dir myDir;
         objPos *playerPos;
-
+        int score = 0;
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
         Food* food;

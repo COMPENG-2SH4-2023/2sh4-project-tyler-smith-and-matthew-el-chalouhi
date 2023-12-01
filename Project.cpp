@@ -37,6 +37,30 @@ int main(void)
     {
         GetInput();
         RunLogic();
+        if ((*gm).getExitFlagStatus() == true) //THE LOOP DELAYS ARE FOR DEBUGGING
+        {
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+            LoopDelay();
+        }
         DrawScreen();
         LoopDelay();
     }

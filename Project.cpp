@@ -41,6 +41,10 @@ int main(void)
         LoopDelay();
     }
 
+    MacUILib_clearScreen();   
+
+    MacUILib_printf("\nGame Over!\n \nFinal Score: %d \n \n \n", player->getScore());
+
     CleanUp();
 
 }
@@ -137,6 +141,7 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
+
     delete gm;
     gm = NULL;
     delete player;
@@ -144,7 +149,5 @@ void CleanUp(void)
     delete food;
     food = NULL;
 
-    MacUILib_clearScreen();    
-  
     MacUILib_uninit();
 }

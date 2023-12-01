@@ -65,7 +65,7 @@ void Player::updatePlayerDir()
     }
 }
 
-bool Player::checkSelfCollision()
+bool Player::checkSelfCollision() //COMPLETELY REWRITE -- CHECK IF NEXT POS DEPENDING ON DIRECTION == BODYPOS
 {
     objPos bodyPart;
 

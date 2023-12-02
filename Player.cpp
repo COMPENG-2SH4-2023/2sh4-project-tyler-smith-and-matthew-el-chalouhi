@@ -31,7 +31,7 @@ objPosArrayList* Player::getPlayerPosList()
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic    
+    // PPA3 input processing logic, update direction state based on keyboard input   
     char input = (*mainGameMechsRef).getInput();
     if(input != 0)  // if not null character
     {
@@ -65,7 +65,7 @@ void Player::updatePlayerDir()
     }
 }
 
-bool Player::checkSelfCollision() //COMPLETELY REWRITE -- CHECK IF NEXT POS DEPENDING ON DIRECTION == BODYPOS
+bool Player::checkSelfCollision() //COMPLETELY REWRITE -- CHECK IF NEXT POS DEPENDING ON DIRECTION == BODYPOS (DO NOT NEED TO DO THIS ANYMORE - TYLER)
 {
     objPos bodyPart;
 
@@ -82,10 +82,11 @@ bool Player::checkSelfCollision() //COMPLETELY REWRITE -- CHECK IF NEXT POS DEPE
     return false;
 }
 
+// Update player position based on the diretion FSM.
 void Player::movePlayer()
 {
 
-    // PPA3 Finite State Machine logic
+    // PPA3 Finite State Machine logic, updates next position position based on state
     switch(myDir) {
         case UP:
             playerPos->y--;
@@ -107,9 +108,10 @@ void Player::movePlayer()
             break;
     }
 
+
+    // If next position is the same as the position of the food, do not remove from tail, increment score.
     objPos foodPos;
     food->getFoodPos(foodPos);
-
     if(myDir != STOP) {
         if(playerPos->isPosEqual(&foodPos)) {
             objPos *next = new objPos(playerPos->x, playerPos->y, '*');
@@ -120,6 +122,8 @@ void Player::movePlayer()
 
             food->generateFood(*playerPosList);
         }
+
+        // Update list by adding next state to head, removing item from tail
         else {
             objPos *next = new objPos(playerPos->x, playerPos->y, '*');
             playerPosList->insertHead(*next);
@@ -130,12 +134,11 @@ void Player::movePlayer()
         }
     }
 
+    // If updated head position is a collision with another body element, end the game.
     if (checkSelfCollision())
     {
         (*mainGameMechsRef).setExitTrue();
         (*mainGameMechsRef).setLoseFlag();
-
-        return;
     }
     
 }

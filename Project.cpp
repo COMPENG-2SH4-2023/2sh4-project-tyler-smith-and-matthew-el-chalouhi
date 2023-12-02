@@ -24,10 +24,6 @@ GameMechs *gm;
 Food *food;
 objPos foodPos;
 
-objPos test;
-
-
-
 int main(void)
 {
 
@@ -37,29 +33,8 @@ int main(void)
     {
         GetInput();
         RunLogic();
-        if ((*gm).getExitFlagStatus() == true) //THE LOOP DELAYS ARE FOR DEBUGGING
+        if ((*gm).getExitFlagStatus() == true) 
         {
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
-            // LoopDelay();
             break;
         }
         DrawScreen();
@@ -87,9 +62,9 @@ void Initialize(void)
     food->generateFood(*(player->getPlayerPosList()));
     MacUILib_printf("done init");
 
-    (*(player->getPlayerPosList())).getElement(test, 0);
 }
 
+// Get updated keyboard input from player
 void GetInput(void)
 {
     if(MacUILib_hasChar()) gm->setInput(MacUILib_getChar());
@@ -98,6 +73,7 @@ void GetInput(void)
     if(gm->getInput() == ' ') gm->setExitTrue();
 }
 
+// Update player direction and motion based on input
 void RunLogic(void)
 {
     (*player).updatePlayerDir();
@@ -105,6 +81,7 @@ void RunLogic(void)
     
 }
 
+// Draw gameboard
 void DrawScreen(void)
 {
     MacUILib_clearScreen();   
@@ -115,6 +92,7 @@ void DrawScreen(void)
     food->getFoodPos(foodPos);
     objPos nextPlayerItem;
 
+    // Loop through all board positions
     int i, j, k;
     for(i = 0; i < sizeY; i++) {
         for(j = 0; j < sizeX; j++) {
@@ -122,6 +100,7 @@ void DrawScreen(void)
 
             bool contFlag = false;
 
+            // If current position is equal to a player segment print the segment symbol
             for(k = 0; k < (*(player->getPlayerPosList())).getSize(); k++) {
                 (*(player->getPlayerPosList())).getElement(nextPlayerItem, k);
                 if(nextPlayerItem.isPosEqual(curr)) {
@@ -136,12 +115,16 @@ void DrawScreen(void)
                 continue;
             } 
 
+            // If this position is a boarder position print the boarder symbol
             if(i == 0 || i == sizeY - 1 || j == 0 || j == sizeX - 1) {
                 if(j == sizeX - 1) MacUILib_printf("%c\n", stensil->getSymbol());
                 else MacUILib_printf("%c", stensil->getSymbol());
             }
+            // If this is position is the food position print the food
             else if(foodPos.isPosEqual(curr)) MacUILib_printf("%c", foodPos.getSymbol());
             else if(j == sizeX - 1) MacUILib_printf("%c\n", stensil->getSymbol());
+
+            // Print space if not a 'special' position
             else MacUILib_printf(" ");
 
             delete curr;
@@ -163,7 +146,7 @@ void LoopDelay(void)
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
 }
 
-
+// Deallocate all heap objects
 void CleanUp(void)
 {
 

@@ -1,8 +1,6 @@
 #include "objPosArrayList.h"
 #include <stdexcept>
 
-// #define NULL 0
-
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.
 
@@ -24,9 +22,9 @@ int objPosArrayList::getSize()
     return sizeList;
 }
 
+// Increase the heap size by 10
 void objPosArrayList::increaseHeapSize()
-{
-        
+{      
     int i;
     objPos *temp = new objPos[sizeArray];
     for(i = 0; i < sizeArray; i++) {
@@ -45,6 +43,7 @@ void objPosArrayList::increaseHeapSize()
     temp = NULL;
 }
 
+// Insert element at front of arraylist
 void objPosArrayList::insertHead(objPos thisPos)
 {
     int i;
@@ -57,6 +56,7 @@ void objPosArrayList::insertHead(objPos thisPos)
     if(sizeList == sizeArray) increaseHeapSize();
 }
 
+// Insert element at end of arraylist
 void objPosArrayList::insertTail(objPos thisPos)
 {
     aList[sizeList] = thisPos;
@@ -65,6 +65,7 @@ void objPosArrayList::insertTail(objPos thisPos)
 
 }
 
+// Remove first element from arraylist
 void objPosArrayList::removeHead()
 {
     int i;
@@ -75,22 +76,26 @@ void objPosArrayList::removeHead()
     sizeList--;
 }
 
+// Remove last element from arraylist
 void objPosArrayList::removeTail()
 {
     aList[sizeList - 1] = objPos(0, 0, 0);
     sizeList--;
 }
 
+// First arraylist element is placed into returnPos
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
     returnPos.setObjPos(aList[0]);
 }
 
+// Last arraylist element is placed into returnPos
 void objPosArrayList::getTailElement(objPos &returnPos)
 {
     returnPos.setObjPos(aList[sizeList - 1]);
 }
 
+// Element at specified index is placed into returnPos
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
     if(index >= sizeArray) throw std::out_of_range("Invalid Index.");

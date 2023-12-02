@@ -84,13 +84,6 @@ bool Player::checkSelfCollision() //COMPLETELY REWRITE -- CHECK IF NEXT POS DEPE
 
 void Player::movePlayer()
 {
-    if (checkSelfCollision())
-    {
-        (*mainGameMechsRef).setExitTrue();
-        (*mainGameMechsRef).setLoseFlag();
-
-        return;
-    }
 
     // PPA3 Finite State Machine logic
     switch(myDir) {
@@ -135,6 +128,14 @@ void Player::movePlayer()
 
             playerPosList->removeTail();
         }
+    }
+
+    if (checkSelfCollision())
+    {
+        (*mainGameMechsRef).setExitTrue();
+        (*mainGameMechsRef).setLoseFlag();
+
+        return;
     }
     
 }
